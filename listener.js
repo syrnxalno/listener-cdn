@@ -1,12 +1,8 @@
 (function () {
-    if (typeof window === "undefined") return; // Ensure script runs only on the client
-
+    if (typeof window === "undefined") return; 
     console.log("Iframe listener script loaded");
-
-    let detectedIframes = new Set(); // to store all detected iframes
+    let detectedIframes = new Set(); 
    
-
-
     const messageHandler = (event) => {
         const validIframe = [...detectedIframes].some((iframe) => { //validating iframe
             return event.origin === new URL(iframe.src).origin;
@@ -29,7 +25,7 @@
                 event.origin
             );
         } else if (type) {
-            // Commented out Mixpanel tracking, replaced with logs
+            // commented out Mixpanel tracking, replaced with logs
             // mixpanel.track(type, data);
             console.log(`Tracked iframe event: ${type}`, data);
 
@@ -44,7 +40,7 @@
         }
     };
 
-    // Detect and track all iframes (including dynamically added ones)
+    // detect and track all iframes (including dynamically added ones)
     const findIframes = (root = document) => {
         const iframes = root.querySelectorAll("iframe");
         iframes.forEach((iframe) => {
@@ -118,7 +114,7 @@
 
     interceptAllEvents();
 
-    // Cleanup function
+    // cleanup
     window.onunload = () => {
         window.removeEventListener("message", messageHandler);
     };
